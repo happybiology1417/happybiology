@@ -4,28 +4,92 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>HappyBiology</title>
+<title>Happy Biology - Soft Launch</title>
+<meta name="description" content="Happy Biology for American Diploma students. The platform is now open for early access - log in to start.">
+<meta name="theme-color" content="#4a1c5d">
 
 <link rel="icon" type="image/png" href="favicon.png?v=2">
 
 <style>
 
+html,body{
+    height:100%;
+}
+
 body{
     margin:0;
-    background:#592761;
+    background:#4a1c5d;
     display:flex;
     justify-content:center;
     align-items:center;
     min-height:100vh;
+    min-height:100dvh;
     overflow:hidden;
 }
 
-img{
-    max-width:100%;
-    max-height:100vh;
-    width:auto;
-    height:auto;
-    object-fit:contain;
+/* Around the picture, where the window is not its shape: the picture itself,
+   out of focus - so there are no flat bars beside it. */
+body::before{
+    content:"";
+    position:fixed;
+    inset:-60px;
+    background:url("wide.jpg?v=1") center / cover no-repeat;
+    filter:blur(36px) brightness(.85);
+    z-index:-1;
+}
+
+@media (max-aspect-ratio: 1/1){
+    body::before{ background-image:url("tall.jpg?v=1"); }
+}
+
+/* The designer's picture, whole, as large as the window allows. The wide
+   one on a laptop; the tall one when the window is taller than it is wide.
+   The box keeps the picture's own shape, so the two links below - placed in
+   percentages of it - stay exactly over the button and the number drawn in
+   the picture at every size. */
+.stage{
+    position:relative;
+    box-shadow:0 0 60px rgba(0,0,0,.35);
+    aspect-ratio:1536 / 1024;
+    width:min(100vw, calc(100vh * 1536 / 1024));
+    width:min(100vw, calc(100dvh * 1536 / 1024));
+}
+
+.stage img{
+    display:block;
+    width:100%;
+    height:100%;
+}
+
+.stage a{
+    position:absolute;
+    border-radius:999px;
+    /* Nothing of its own to see: the picture draws the button. */
+    color:transparent;
+    font-size:0;
+    -webkit-tap-highlight-color:rgba(255,255,255,.15);
+}
+
+.stage a:hover{
+    background:rgba(255,255,255,.10);
+}
+
+.stage a:focus-visible{
+    outline:3px solid #ffffff;
+    outline-offset:3px;
+}
+
+.login{    left:24.1%; top:64.6%; width:31.4%; height:10.6%; }
+.whatsapp{ left:22.9%; top:80.3%; width:34.5%; height:10.9%; }
+
+@media (max-aspect-ratio: 1/1){
+    .stage{
+        aspect-ratio:941 / 1672;
+        width:min(100vw, calc(100vh * 941 / 1672));
+        width:min(100vw, calc(100dvh * 941 / 1672));
+    }
+    .login{    left:17.9%; top:73.1%; width:64.5%; height:8.3%; }
+    .whatsapp{ left:20.5%; top:87.3%; width:58.9%; height:6.7%; }
 }
 
 </style>
@@ -33,7 +97,15 @@ img{
 
 <body>
 
-<img src="comingsoon.png?v=2" alt="HappyBiology Coming Soon">
+<main class="stage">
+    <picture>
+        <source media="(max-aspect-ratio: 1/1)" srcset="tall.jpg?v=1" width="941" height="1672">
+        <img src="wide.jpg?v=1" width="1536" height="1024"
+             alt="Happy Biology, for American Diploma students. Soft launch: the Happy Biology platform is now open for early access. Log in. Contact us on WhatsApp: 01044209012.">
+    </picture>
+    <a class="login" href="https://student.happybiology.org/">Log in to Happy Biology</a>
+    <a class="whatsapp" href="https://wa.me/201044209012" target="_blank" rel="noopener">Contact us on WhatsApp: 01044209012</a>
+</main>
 
 </body>
 </html>
